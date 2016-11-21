@@ -1,0 +1,67 @@
+Project name : Evaluation of tweet clustering matrix
+
+There are four parts of this projects:
+	1.	Tweet cleaning and dataset generation
+	2.	Similarity_graphs generation
+	3.	Clustering and graph pationing
+	4.	Evaluation
+	
+	
+1. Tweet cleaning and dataset generation
+
+Scipts: tweet_index_id_map.py 
+		textextract.py	 
+		ground_truth_8clusters.py
+		
+		i) tweet_index_id_map.py - Usage: This script creates a mapping between tweet index and natural numbers. This mapping reduces the index 								   		  size and hence reduces data size in further steps.
+					  			   Library needed : json
+								   Files needed : rawdatadir
+									
+		ii) textextract.py - Usage: This script creates sample dataset along with its ground truth from raw json files. 
+							 Library needed : nltk, json
+							 Files needed : stopwordfile, mappingfile, rawdatadir
+			
+		iii) ground_truth_8clusters.py - Usage: After creating the dataset, this script creates the ground truth files for 9 broader clusters from a 											   given dataset. 
+										 Library needed : json
+										 Files needed : mappingfile, clustertagfile, rawdatadir, inputfile(dataset)
+		
+		
+2. Similarity_graphs generation
+
+Scripts:  Jaccardsimilarity.py
+		  ldatest.py
+		  wordtovec.py
+		  
+	    i) Jaccardsimilarity.py - Usage: This script takes a dataset and creates similarity grpah (considering each tweet as a node and edges are 										   weighted based on the similarity of two tweets) and writes the edgelist to the outfile.
+					  			  	Library needed : sklearn, numpy
+								    Files needed : dataset
+									
+		ii) ldatest.py - Usage: This script creates similarity graph using lda model. 
+						 Library needed : sklearn, numpy
+					     Files needed : dataset
+			
+		iii) wordtovec.py - Usage: Creates similarity graph using wrod2vec model. 
+								   Library needed : numpy, scipy, gensim.models.Word2Vec, sklearn.cluster
+								   Files needed : dataset
+		
+		  
+3. Clustering and graph partioning
+	
+Scripts: 	kMeansClustering.py
+			tweet_cluster_fm.py
+			
+			i) kMeansClustering.py - Usage: Clusters the vector or graph created at previous step using KMean algorithm
+					  			  	 Library needed : sklearn, numpy
+								     Files needed : similarity_graph
+									
+			ii) tweet_cluster_fm.py - Usage: Partitions graph using Kernighan-Lin Algorithm 
+						 			  Files needed : similarity_graph
+					
+4. Evaluation
+
+Scipts:		evaluation.py			
+		
+			i) evaluation.py - Usage: Evaluates the resulted clusters with ground truth
+							   Library needed : sklearn, numpy
+							   Files needed : ground_truth, test_cluster			
+
